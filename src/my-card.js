@@ -18,25 +18,27 @@ export class MyCard extends LitElement {
     this.image = "https://via.placeholder.com/200"; 
     this.description = "This is a default description."; 
     this.link = "#"; 
+    this.fancy = false;
   }
 
   static get styles() {
     return css`
-      :host {
+      :host { 
         display: block;
         font-family: sans-serif;
         margin: 8px;
       }
 
   .card {
-  font-size: 1em;
-  display: inline-flex;
-  border: 2px solid grey;
-  padding: 8px;
-  margin: 8px;
-  opacity: .8;
-  background-color: navy;
-  transition: .6s all ease-in-out;
+    width: 100%;
+    max-width: 400px;
+    border: 8px blue;
+    border-color: black;
+    border-radius: 10px;
+    margin: 16px;
+    padding: 16px;
+    background-color: green;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .fancy {
@@ -45,7 +47,7 @@ export class MyCard extends LitElement {
 }
 
 .card-image {
-  width: 200px;
+  width: 300px;
   height: 100%;
 }
 
@@ -139,6 +141,7 @@ ul li:nth-child(even) {
 
   static get properties() {
     return {
+      fancy: {type: Boolean, reflect: true },
       title: { type: String },
       image: { type: String },
       description: { type: String },
