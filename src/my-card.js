@@ -28,6 +28,14 @@ export class MyCard extends LitElement {
         font-family: sans-serif;
         margin: 8px;
       }
+      :host([fancy]) {
+        background-color: blue;
+        color: white;
+      }
+      .card.toggled {
+        background-color: gray;
+        color: blue;
+      }
 
   .card {
     width: 100%;
@@ -48,7 +56,7 @@ export class MyCard extends LitElement {
 
 .card-image {
   width: 300px;
-  height: 100%;
+  height: 300px;
 }
 
 .card-text {
@@ -120,25 +128,63 @@ ul li:nth-child(even) {
   outline-offset: 16px;
 }
 
+details summary {
+    text-align: left;
+    font-size: 20px;
+    padding: 8px 0;
+  }
+
+  details[open] summary {
+    font-weight: bold;
+  }
+  
+  details div {
+    border: 2px solid black;
+    text-align: left;
+    padding: 8px;
+    height: 70px;
+    overflow: auto;
+  }
+
     `;
+  }
+
+  // put this anywhere on the MyCard class; just above render() is probably good
+  openChanged(e) {
+    console.log(e.newState);
+    if (e.newState === "open") {
+      this.fancy = true;
+    }
+    else {
+      this.fancy = false;
+    }
   }
 
   render() {
     return html`
-   <div class="card">
+    <div class="card">
         <img class="card-image" src="${this.image}" alt="Card Image">
+        <!-- put this in your render method where you had details -->
+      <details ?open="${this.fancy}" @toggle="${this.openChanged}"> 
         <div class="card-text">
           <h3 class="card-title">${this.title}</h3>
-          <p>${this.description}</p>
+          <slot></slot>
           <ul class="links">
             <li><a href="${this.link}" target="_blank">Details</a></li>
           </ul>
+          </div>
+      </details>
+        
     </div>  
     </div> 
     
     `;
+
+
   }
 
+
+  
   static get properties() {
     return {
       fancy: {type: Boolean, reflect: true },
